@@ -38,13 +38,21 @@ def init_admin():
     email = os.getenv("ADMIN_EMAIL", "admin@example.com").lower()
     password = os.getenv("ADMIN_PASSWORD", "admin123")
     name = "Administrator"
+    
+    # Debug: Show what environment variables are being read
+    debug_info = f"Environment variables:<br>"
+    debug_info += f"ADMIN_EMAIL: {os.getenv('ADMIN_EMAIL', 'NOT SET')}<br>"
+    debug_info += f"ADMIN_PASSWORD: {os.getenv('ADMIN_PASSWORD', 'NOT SET')}<br>"
+    debug_info += f"Using email: {email}<br>"
+    debug_info += f"Using password: {password}<br><br>"
+    
     user = User.query.filter_by(email=email).first()
     if not user:
         user = User(name=name, email=email, role="admin")
         user.set_password(password)
         db.session.add(user)
         db.session.commit()
-        msg = f"Created admin {email} with provided password."
+        msg = debug_info + f"Created admin {email} with provided password."
     else:
-        msg = f"Admin {email} already exists."
+        msg = debug_info + f"Admin {email} already exists."
     return msg
