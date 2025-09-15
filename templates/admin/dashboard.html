@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Admin Dashboard</h2>
+<div class="grid">
+  <div>
+    <h3>Welcomers</h3>
+    <ul>
+      {% for item in welcomers_with_counts %}
+        <li>{{ item.welcomer.name }} — {{ item.welcomer.email }} 
+          <span style="color: #666;">({{ item.assignment_count }} assigned)</span>
+        </li>
+      {% endfor %}
+    </ul>
+    <a class="btn" href="{{ url_for('admin.create_welcomer') }}">+ Create Welcomer</a>
+    <a class="btn" href="{{ url_for('admin.delete_welcomer') }}" style="background: #dc3545; color: white;">- Delete Welcomer</a>
+  </div>
+  <div>
+    <h3>Members</h3>
+    <ul>
+      {% for item in members_with_status %}
+        <li>{{ item.member.name }}
+          {% if item.assigned %}
+            <span style="color: green;">✓ Assigned</span>
+          {% else %}
+            <span style="color: red;">✗ Not Assigned</span>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+    <a class="btn" href="{{ url_for('admin.create_member') }}">+ Create Member</a>
+    <a class="btn" href="{{ url_for('admin.delete_member') }}" style="background: #dc3545; color: white;">- Delete Member</a>
+  </div>
+</div>
+
+<h3>Assignments (Week: {{ week_key }})</h3>
+<table>
+  <thead><tr><th>Welcomer</th><th>Member</th><th>Status</th><th>Action</th></tr></thead>
+  <tbody>
+    {% for item in assignments_with_status %}
+      <tr>
+        <td>{{ item.assignment.welcomer.name }}</td>
+        <td>{{ item.assignment.member.name }}</td>
+        <td>
+          {% if item.checked %}
+            <span style="color: green;">✓ Checked</span>
+          {% else %}
+            <span style="color: red;">✗ Not Checked</span>
+          {% endif %}
+        </td>
+        <td>
+          <form method="post" action="{{ url_for('admin.unassign', assignment_id=item.assignment.id) }}">
+            <button type="submit">Unassign</button>
+          </form>
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<a class="btn" href="{{ url_for('admin.assign') }}">Assign Member → Welcomer</a>
+
+<h3>Weekly Topic & Question</h3>
+<form method="post" action="{{ url_for('admin.set_weekly_topic') }}">
+  <label>Topic</label>
+  <input name="topic" value="{{ current_topic.topic if current_topic else '' }}" placeholder="e.g., Gratitude, Community, Growth" required>
+  
+  <label>Bible Verse Reference (Optional)</label>
+  <input name="bible_verse_ref" value="{{ current_topic.bible_verse_ref if current_topic else '' }}" placeholder="e.g., John 3:16, Philippians 4:6-7">
+  
+  <label>Bible Verse Text (Optional)</label>
+  <textarea name="bible_verse_text" placeholder="Paste the full Bible verse text here..." style="width: 100%; min-height: 80px; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; font-size: 14px; resize: vertical;">{{ current_topic.bible_verse_text if current_topic else '' }}</textarea>
+  
+  <label>Message</label>
+  <textarea name="question" placeholder="What message should welcomers share with members this week?" required style="width: 100%; min-height: 120px; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; font-size: 14px; resize: vertical;">{{ current_topic.question if current_topic else '' }}</textarea>
+  
+  <label>Activity (Optional)</label>
+  <textarea name="activity" placeholder="What activity should welcomers do with members this week? (e.g., prayer walk, service project, study group)" style="width: 100%; min-height: 80px; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; font-size: 14px; resize: vertical;">{{ current_topic.activity if current_topic else '' }}</textarea>
+  
+  <button type="submit">
+    {% if current_topic %}
+      Update Weekly Topic
+    {% else %}
+      Set Weekly Topic
+    {% endif %}
+  </button>
+</form>
+{% endblock %}

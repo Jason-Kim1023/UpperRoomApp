@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Assign Members → Welcomer</h2>
+<form method="post">
+  <label>Welcomer</label>
+  <select name="welcomer_id" required>
+    <option value="">Choose a welcomer...</option>
+    {% for w in welcomers %}
+      <option value="{{ w.id }}">{{ w.name }} ({{ w.email }})</option>
+    {% endfor %}
+  </select>
+  
+  <label>Select Members to Assign</label>
+  {% if unassigned_members %}
+    <div style="border: 1px solid #ccc; padding: 10px; max-height: 200px; overflow-y: auto;">
+      {% for m in unassigned_members %}
+        <label style="display: block; margin: 5px 0;">
+          <input type="checkbox" name="member_ids" value="{{ m.id }}">
+          {{ m.name }}
+        </label>
+      {% endfor %}
+    </div>
+    <button type="submit">Assign Selected Members</button>
+  {% else %}
+    <p style="color: #666; font-style: italic;">All members are already assigned to welcomers.</p>
+  {% endif %}
+</form>
+<a class="btn" href="{{ url_for('admin.dashboard') }}">Back to Dashboard</a>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>My Weekly Checklist — {{ week_key }}</h2>
+
+{% if current_topic %}
+<div style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 20px; margin-bottom: 30px;">
+  <h3 style="color: #495057; margin-top: 0;">📋 This Week's Topic: {{ current_topic.topic }}</h3>
+  
+  {% if current_topic.bible_verse_ref %}
+  <div style="color: #6c757d; margin: 15px 0; font-size: 16px; line-height: 1.6;">
+    <p style="margin: 0 0 8px 0;">
+      <strong>📖 Bible Verse:</strong> {{ current_topic.bible_verse_ref }}
+    </p>
+    <p style="margin: 0; font-style: italic; padding: 10px; background: #ffffff; border-left: 4px solid #007bff; border-radius: 4px;">
+      "{{ current_topic.bible_verse_text }}"
+    </p>
+  </div>
+  {% endif %}
+  
+  <p style="color: #6c757d; margin-bottom: 0; font-size: 16px; line-height: 1.5;">
+    <strong>💬 Message:</strong> {{ current_topic.question }}
+  </p>
+  
+  <div style="color: #6c757d; margin: 15px 0 0 0; font-size: 16px; line-height: 1.5;">
+    <strong>🎯 Activity:</strong> 
+    {% if current_topic.activity %}
+      {{ current_topic.activity }}
+    {% else %}
+      No activity this week
+    {% endif %}
+  </div>
+</div>
+{% else %}
+<div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 20px; margin-bottom: 30px;">
+  <p style="color: #856404; margin: 0;">⚠️ No weekly topic set yet. Check with your admin.</p>
+</div>
+{% endif %}
+
+{% if members %}
+  <h3>Your Assigned Members</h3>
+  <ul class="checklist">
+    {% for m in members %}
+      <li>
+        <form action="{{ url_for('welcomer.uncheck' if m.checked else 'welcomer.check', member_id=m.id) }}">
+          <input type="checkbox" {% if m.checked %}checked{% endif %} onchange="this.form.submit()">
+          <span>{{ m.name }}{% if m.phone %} — {{ m.phone }}{% endif %}</span>
+        </form>
+      </li>
+    {% endfor %}
+  </ul>
+  <p class="hint">This checklist resets automatically each ISO week. Checked items are stored against the current week key.</p>
+{% else %}
+  <p>No members assigned yet.</p>
+{% endif %}
+{% endblock %}

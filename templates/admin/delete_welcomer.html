@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Delete Welcomer</h2>
+<form method="post">
+  <label>Select Welcomer to Delete</label>
+  <select name="welcomer_id" required>
+    <option value="">Choose a welcomer...</option>
+    {% for welcomer in welcomers %}
+      <option value="{{ welcomer.id }}">{{ welcomer.name }} — {{ welcomer.email }}</option>
+    {% endfor %}
+  </select>
+  <button type="submit" onclick="return confirm('Are you sure you want to delete this welcomer? This will also delete all their assignments and checkoffs.')">Delete Welcomer</button>
+</form>
+<a class="btn" href="{{ url_for('admin.dashboard') }}">Back to Dashboard</a>
+{% endblock %}
