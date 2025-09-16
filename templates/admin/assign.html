@@ -6,7 +6,7 @@
   <select name="welcomer_id" required>
     <option value="">Choose a welcomer...</option>
     {% for w in welcomers %}
-      <option value="{{ w.id }}">{{ w.name }} ({{ w.email }})</option>
+      <option value="{{ w.id }}">{{ w.name }} ({{ w.username }})</option>
     {% endfor %}
   </select>
   
