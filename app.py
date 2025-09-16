@@ -20,17 +20,12 @@ def create_app():
     login_manager.init_app(app)
 
     with app.app_context():
-        # Check if tables exist before creating them
-        from sqlalchemy import inspect
-        inspector = inspect(db.engine)
-        existing_tables = inspector.get_table_names()
-        
-        # Only create tables if they don't exist
-        if not existing_tables:
-            print("Creating database tables...")
-            db.create_all()
-        else:
-            print(f"Database tables already exist: {existing_tables}")
+        # Always create tables - this is safe for both SQLite and PostgreSQL
+        # For PostgreSQL, this will only create tables if they don't exist
+        # For SQLite, this ensures tables are created on first run
+        print("Creating/updating database tables...")
+        db.create_all()
+        print("Database tables ready!")
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(admin_bp, url_prefix="/admin")
