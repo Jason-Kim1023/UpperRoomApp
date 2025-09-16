@@ -20,7 +20,17 @@ def create_app():
     login_manager.init_app(app)
 
     with app.app_context():
-        db.create_all()
+        # Check if tables exist before creating them
+        from sqlalchemy import inspect
+        inspector = inspect(db.engine)
+        existing_tables = inspector.get_table_names()
+        
+        # Only create tables if they don't exist
+        if not existing_tables:
+            print("Creating database tables...")
+            db.create_all()
+        else:
+            print(f"Database tables already exist: {existing_tables}")
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(admin_bp, url_prefix="/admin")
