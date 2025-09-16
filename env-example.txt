@@ -1,11 +1,4 @@
-# For Railway deployment, these will be set automatically:
-# DATABASE_URL - Railway PostgreSQL database URL
-# FLASK_SECRET_KEY - Set this in Railway dashboard
-
-# Admin user credentials (set these in Railway dashboard):
+FLASK_SECRET_KEY=your-secret-key-here
+DATABASE_URL=sqlite:///app.db
 ADMIN_USERNAME=admin
 ADMIN_PASSWORD=admin123
-
-# For local development:
-# FLASK_SECRET_KEY=your-secret-key-here
-# DATABASE_URL=sqlite:///app.db
