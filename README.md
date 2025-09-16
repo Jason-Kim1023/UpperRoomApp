@@ -1,4 +1,4 @@
-# The Upper Room App (Flask + SQLite)
+# The Greeters Ministry App (Flask + SQLite)
 
 A minimal two-role app:
 

@@ -1,4 +1,4 @@
-# 🚀 Deployment Guide for The Upper Room App
+# 🚀 Deployment Guide for The Greeters Ministry App
 
 ## Quick Start - Railway (Recommended)
 
