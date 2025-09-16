@@ -36,6 +36,105 @@
 </div>
 {% endif %}
 
+{% if current_topic %}
+<div style="background: #e8f5e8; border: 1px solid #c3e6c3; border-radius: 8px; padding: 20px; margin-bottom: 30px;">
+  <h3 style="color: #2d5a2d; margin-top: 0;">💬 General Message Template</h3>
+  <p style="color: #4a6741; margin-bottom: 15px; font-size: 14px;">Use this template to reach out to your members. Just replace "XX" with their name!</p>
+  
+  <div style="background: #ffffff; border: 1px solid #d4edda; border-radius: 6px; padding: 15px; margin-bottom: 15px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6;">
+    <div id="messageTemplate" style="white-space: pre-line; color: #333;">Hey XX,
+
+Hope you're having a great week! Just wanted to check up on you and see how you're doing and if there's anything that our church can pray for you this week! This week, our topic is about {{ current_topic.topic }} and the verse we wanted to share with you as a church is:
+
+{% if current_topic.bible_verse_ref %}{{ current_topic.bible_verse_ref }}: "{{ current_topic.bible_verse_text }}"{% endif %}
+
+Also, wanted to remind you that we have a {% if current_topic.activity %}{{ current_topic.activity }}{% else %}(insert activity){% endif %} next week! You should come out and I hope to see you there.
+
+**please continue the conversation and don't just end it there**</div>
+  </div>
+  
+  <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+    <button onclick="copyTemplate()" style="background: #28a745; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 14px;">📋 Copy Template</button>
+    <button onclick="generatePersonalized()" style="background: #007bff; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 14px;">✨ Generate for Member</button>
+  </div>
+  
+  <div id="personalizedSection" style="display: none; margin-top: 15px;">
+    <label for="memberSelect" style="display: block; margin-bottom: 8px; color: #4a6741; font-weight: bold;">Select Member:</label>
+    <select id="memberSelect" style="width: 100%; max-width: 300px; padding: 8px; border: 1px solid #ccc; border-radius: 4px; margin-bottom: 10px;">
+      {% for m in members %}
+        <option value="{{ m.name }}">{{ m.name }}</option>
+      {% endfor %}
+    </select>
+    <div id="personalizedMessage" style="background: #ffffff; border: 1px solid #d4edda; border-radius: 6px; padding: 15px; margin-bottom: 10px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; white-space: pre-line; color: #333;"></div>
+    <button onclick="copyPersonalized()" style="background: #28a745; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 14px;">📋 Copy Personalized Message</button>
+  </div>
+</div>
+
+<script>
+function copyTemplate() {
+  const template = document.getElementById('messageTemplate').textContent;
+  navigator.clipboard.writeText(template).then(function() {
+    // Show a brief success message
+    const button = event.target;
+    const originalText = button.textContent;
+    button.textContent = '✅ Copied!';
+    button.style.background = '#28a745';
+    setTimeout(() => {
+      button.textContent = originalText;
+    }, 2000);
+  }).catch(function(err) {
+    console.error('Could not copy text: ', err);
+    alert('Could not copy to clipboard. Please select and copy manually.');
+  });
+}
+
+function generatePersonalized() {
+  const section = document.getElementById('personalizedSection');
+  const memberSelect = document.getElementById('memberSelect');
+  const messageDiv = document.getElementById('personalizedMessage');
+  
+  if (section.style.display === 'none') {
+    section.style.display = 'block';
+    // Generate message for first member by default
+    updatePersonalizedMessage();
+  } else {
+    section.style.display = 'none';
+  }
+}
+
+function updatePersonalizedMessage() {
+  const memberName = document.getElementById('memberSelect').value;
+  const template = document.getElementById('messageTemplate').textContent;
+  const personalizedMessage = template.replace(/XX/g, memberName);
+  document.getElementById('personalizedMessage').textContent = personalizedMessage;
+}
+
+function copyPersonalized() {
+  const message = document.getElementById('personalizedMessage').textContent;
+  navigator.clipboard.writeText(message).then(function() {
+    const button = event.target;
+    const originalText = button.textContent;
+    button.textContent = '✅ Copied!';
+    button.style.background = '#28a745';
+    setTimeout(() => {
+      button.textContent = originalText;
+    }, 2000);
+  }).catch(function(err) {
+    console.error('Could not copy text: ', err);
+    alert('Could not copy to clipboard. Please select and copy manually.');
+  });
+}
+
+// Update personalized message when member selection changes
+document.addEventListener('DOMContentLoaded', function() {
+  const memberSelect = document.getElementById('memberSelect');
+  if (memberSelect) {
+    memberSelect.addEventListener('change', updatePersonalizedMessage);
+  }
+});
+</script>
+{% endif %}
+
 {% if members %}
   <h3>Your Assigned Members</h3>
   <ul class="checklist">
