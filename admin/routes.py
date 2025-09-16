@@ -61,12 +61,12 @@ def dashboard():
 def create_welcomer():
     if request.method == "POST":
         name = request.form["name"].strip()
-        email = request.form["email"].strip().lower()
+        username = request.form["username"].strip()
         password = request.form["password"].strip()
-        if User.query.filter_by(email=email).first():
-            flash("Email already exists", "error")
+        if User.query.filter_by(username=username).first():
+            flash("Username already exists", "error")
             return redirect(url_for("admin.create_welcomer"))
-        user = User(name=name, email=email, role="welcomer")
+        user = User(name=name, username=username, role="welcomer")
         user.set_password(password)
         db.session.add(user)
         db.session.commit()

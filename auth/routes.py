@@ -14,9 +14,9 @@ def load_user(user_id):
 @auth_bp.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        email = request.form.get("email", "").strip().lower()
+        username = request.form.get("username", "").strip()
         password = request.form.get("password", "")
-        user = User.query.filter_by(email=email).first()
+        user = User.query.filter_by(username=username).first()
         if user and user.check_password(password):
             login_user(user)
             if user.role == "admin":
@@ -35,24 +35,24 @@ def logout():
 @auth_bp.route("/init-admin")
 def init_admin():
     # Convenience route to setup an initial admin user from env or defaults.
-    email = os.getenv("ADMIN_EMAIL", "admin@example.com").lower()
+    username = os.getenv("ADMIN_USERNAME", "admin")
     password = os.getenv("ADMIN_PASSWORD", "admin123")
     name = "Administrator"
     
     # Debug: Show what environment variables are being read
     debug_info = f"Environment variables:<br>"
-    debug_info += f"ADMIN_EMAIL: {os.getenv('ADMIN_EMAIL', 'NOT SET')}<br>"
+    debug_info += f"ADMIN_USERNAME: {os.getenv('ADMIN_USERNAME', 'NOT SET')}<br>"
     debug_info += f"ADMIN_PASSWORD: {os.getenv('ADMIN_PASSWORD', 'NOT SET')}<br>"
-    debug_info += f"Using email: {email}<br>"
+    debug_info += f"Using username: {username}<br>"
     debug_info += f"Using password: {password}<br><br>"
     
-    user = User.query.filter_by(email=email).first()
+    user = User.query.filter_by(username=username).first()
     if not user:
-        user = User(name=name, email=email, role="admin")
+        user = User(name=name, username=username, role="admin")
         user.set_password(password)
         db.session.add(user)
         db.session.commit()
-        msg = debug_info + f"Created admin {email} with provided password."
+        msg = debug_info + f"Created admin {username} with provided password."
     else:
-        msg = debug_info + f"Admin {email} already exists."
+        msg = debug_info + f"Admin {username} already exists."
     return msg

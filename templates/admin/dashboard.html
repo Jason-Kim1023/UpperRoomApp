@@ -6,7 +6,7 @@
     <h3>Welcomers</h3>
     <ul>
       {% for item in welcomers_with_counts %}
-        <li>{{ item.welcomer.name }} — {{ item.welcomer.email }} 
+        <li>{{ item.welcomer.name }} — {{ item.welcomer.username }} 
           <span style="color: #666;">({{ item.assignment_count }} assigned)</span>
         </li>
       {% endfor %}
