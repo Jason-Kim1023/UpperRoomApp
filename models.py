@@ -48,4 +48,5 @@ class WeeklyTopic(db.Model):
     bible_verse_text = db.Column(db.Text, nullable=True)  # Full verse text
     question = db.Column(db.Text, nullable=False)
     activity = db.Column(db.Text, nullable=True)  # Optional activity for the week
+    show_message_template = db.Column(db.Boolean, default=True, nullable=False)  # Toggle for message template
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
