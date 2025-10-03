@@ -188,7 +188,6 @@ def set_weekly_topic():
     bible_verse_text = request.form.get("bible_verse_text", "").strip()
     question = request.form["question"].strip()
     activity = request.form.get("activity", "").strip()
-    show_message_template = "show_message_template" in request.form
     
     if not topic or not question:
         flash("Both topic and question are required.", "error")
@@ -204,7 +203,6 @@ def set_weekly_topic():
         existing_topic.bible_verse_text = bible_verse_text if bible_verse_text else None
         existing_topic.question = question
         existing_topic.activity = activity if activity else None
-        existing_topic.show_message_template = show_message_template
         flash("Weekly topic updated.", "success")
     else:
         # Create new topic
@@ -214,8 +212,7 @@ def set_weekly_topic():
             bible_verse_ref=bible_verse_ref if bible_verse_ref else None, 
             bible_verse_text=bible_verse_text if bible_verse_text else None, 
             question=question,
-            activity=activity if activity else None,
-            show_message_template=show_message_template
+            activity=activity if activity else None
         )
         db.session.add(new_topic)
         flash("Weekly topic set.", "success")

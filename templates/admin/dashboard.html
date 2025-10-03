@@ -82,11 +82,6 @@
   <label>Activity (Optional)</label>
   <textarea name="activity" placeholder="What activity should welcomers do with members this week? (e.g., prayer walk, service project, study group)" class="textarea-formatted">{{ current_topic.activity if current_topic else '' }}</textarea>
   
-  <label style="display: flex; align-items: center; gap: 8px; margin-top: 15px;">
-    <input type="checkbox" name="show_message_template" {% if not current_topic or current_topic.show_message_template %}checked{% endif %}>
-    <span>💬 Show message template to welcomers</span>
-  </label>
-  
   <button type="submit">
     {% if current_topic %}
       Update Weekly Topic
