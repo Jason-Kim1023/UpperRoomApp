@@ -11,17 +11,17 @@
     <p style="margin: 0 0 8px 0;">
       <strong>📖 Bible Verse:</strong> {{ current_topic.bible_verse_ref }}
     </p>
-    <p style="margin: 0; font-style: italic; padding: 10px; background: #ffffff; border-left: 4px solid #007bff; border-radius: 4px;">
+    <p style="margin: 0; font-style: italic; padding: 10px; background: #ffffff; border-left: 4px solid #007bff; border-radius: 4px; white-space: pre-line;">
       "{{ current_topic.bible_verse_text }}"
     </p>
   </div>
   {% endif %}
   
-  <p style="color: #6c757d; margin-bottom: 0; font-size: 16px; line-height: 1.5;">
+  <p style="color: #6c757d; margin-bottom: 0; font-size: 16px; line-height: 1.5; white-space: pre-line;">
     <strong>💬 Message:</strong> {{ current_topic.question }}
   </p>
   
-  <div style="color: #6c757d; margin: 15px 0 0 0; font-size: 16px; line-height: 1.5;">
+  <div style="color: #6c757d; margin: 15px 0 0 0; font-size: 16px; line-height: 1.5; white-space: pre-line;">
     <strong>🎯 Activity:</strong> 
     {% if current_topic.activity %}
       {{ current_topic.activity }}
