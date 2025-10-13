@@ -13,7 +13,7 @@ def dashboard():
         return redirect(url_for("auth.login"))
     week_key = current_week_key()
     
-    # Get current weekly topic
+    # Get current biweekly topic
     current_topic = WeeklyTopic.query.filter_by(week_key=week_key).first()
     
     # List assigned members to this welcomer

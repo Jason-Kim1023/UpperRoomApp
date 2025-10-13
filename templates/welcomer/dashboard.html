@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>My Weekly Checklist — {{ week_key }}</h2>
+<h2>My Biweekly Checklist — {{ week_key }}</h2>
 
 {% if current_topic %}
 <div style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 20px; margin-bottom: 30px;">
-  <h3 style="color: #495057; margin-top: 0;">📋 This Week's Topic: {{ current_topic.topic }}</h3>
+  <h3 style="color: #495057; margin-top: 0;">📋 This Biweekly Topic: {{ current_topic.topic }}</h3>
   
   {% if current_topic.bible_verse_ref %}
   <div style="color: #6c757d; margin: 15px 0; font-size: 16px; line-height: 1.6;">
@@ -26,13 +26,13 @@
     {% if current_topic.activity %}
       {{ current_topic.activity }}
     {% else %}
-      No activity this week
+      No activity this biweekly period
     {% endif %}
   </div>
 </div>
 {% else %}
 <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 20px; margin-bottom: 30px;">
-  <p style="color: #856404; margin: 0;">⚠️ No weekly topic set yet. Check with your admin.</p>
+  <p style="color: #856404; margin: 0;">⚠️ No biweekly topic set yet. Check with your admin.</p>
 </div>
 {% endif %}
 
@@ -49,7 +49,7 @@
       </li>
     {% endfor %}
   </ul>
-  <p class="hint">This checklist resets automatically each ISO week. Checked items are stored against the current week key.</p>
+  <p class="hint">This checklist resets automatically each biweekly period. Checked items are stored against the current period key.</p>
 {% else %}
   <p>No members assigned yet.</p>
 {% endif %}

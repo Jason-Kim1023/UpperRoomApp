@@ -2,8 +2,8 @@
 
 A minimal two-role app:
 
-- **Admin**: create welcomers, create members, assign members to welcomers, set weekly topics with Bible verses and activities
-- **Welcomer**: log in and see a weekly checklist of assigned members; check/uncheck items (auto-resets weekly)
+- **Admin**: create welcomers, create members, assign members to welcomers, set biweekly topics with Bible verses and activities
+- **Welcomer**: log in and see a biweekly checklist of assigned members; check/uncheck items (auto-resets biweekly)
 
 ## Quick Start
 
@@ -24,18 +24,18 @@ Open: http://127.0.0.1:5000
 - Create Welcomers (email + temp password)
 - Create Members
 - Assign Member → Welcomer (multiple selection)
-- Set Weekly Topics with Bible verses and activities
+- Set Biweekly Topics with Bible verses and activities
 - Delete welcomers and members
 - View assignment status and checkoff progress
 
 ### Welcomer Dashboard:
-- View weekly topic, Bible verse, message, and activity
+- View biweekly topic, Bible verse, message, and activity
 - Check off assigned members as contacted
-- Automatic weekly reset
+- Automatic biweekly reset
 
-## Weekly Reset
+## Biweekly Reset
 
-The app uses an **ISO week key** (e.g., `2025-W38`) and stores checkoffs per week. Each new week displays an unchecked list automatically—no manual reset needed.
+The app uses a **biweekly period key** (e.g., `2025-B19`) and stores checkoffs per biweekly period. Each new biweekly period displays an unchecked list automatically—no manual reset needed.
 
 ## Notes
 

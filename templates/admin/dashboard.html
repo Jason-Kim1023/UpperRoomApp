@@ -36,7 +36,7 @@
   </div>
 </div>
 
-<h3>Assignments (Week: {{ week_key }})</h3>
+<h3>Assignments (Period: {{ week_key }})</h3>
 <div style="max-height: 400px; overflow-y: auto; border: 1px solid #ddd; border-radius: 4px;">
   <table>
     <thead style="position: sticky; top: 0; background: white; z-index: 10;"><tr><th>Welcomer</th><th>Member</th><th>Status</th><th>Action</th></tr></thead>
@@ -65,8 +65,8 @@
 
 <a class="btn" href="{{ url_for('admin.assign') }}">Assign Member → Welcomer</a>
 
-<h3>Weekly Topic & Question</h3>
-<form method="post" action="{{ url_for('admin.set_weekly_topic') }}">
+<h3>Biweekly Topic & Question</h3>
+<form method="post" action="{{ url_for('admin.set_biweekly_topic') }}">
   <label>Topic</label>
   <input name="topic" value="{{ current_topic.topic if current_topic else '' }}" placeholder="e.g., Gratitude, Community, Growth" required>
   
@@ -77,16 +77,16 @@
   <textarea name="bible_verse_text" placeholder="Paste the full Bible verse text here..." class="textarea-formatted">{{ current_topic.bible_verse_text if current_topic else '' }}</textarea>
   
   <label>Message</label>
-  <textarea name="question" placeholder="What message should welcomers share with members this week?" required class="textarea-formatted" style="min-height: 120px;">{{ current_topic.question if current_topic else '' }}</textarea>
+  <textarea name="question" placeholder="What message should welcomers share with members this biweekly period?" required class="textarea-formatted" style="min-height: 120px;">{{ current_topic.question if current_topic else '' }}</textarea>
   
   <label>Activity (Optional)</label>
-  <textarea name="activity" placeholder="What activity should welcomers do with members this week? (e.g., prayer walk, service project, study group)" class="textarea-formatted">{{ current_topic.activity if current_topic else '' }}</textarea>
+  <textarea name="activity" placeholder="What activity should welcomers do with members this biweekly period? (e.g., prayer walk, service project, study group)" class="textarea-formatted">{{ current_topic.activity if current_topic else '' }}</textarea>
   
   <button type="submit">
     {% if current_topic %}
-      Update Weekly Topic
+      Update Biweekly Topic
     {% else %}
-      Set Weekly Topic
+      Set Biweekly Topic
     {% endif %}
   </button>
 </form>

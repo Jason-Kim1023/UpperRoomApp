@@ -33,16 +33,16 @@ class Checkoff(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     welcomer_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     member_id = db.Column(db.Integer, db.ForeignKey('member.id'), nullable=False)
-    week_key = db.Column(db.String(16), nullable=False)  # e.g., "2025-W38"
+    week_key = db.Column(db.String(16), nullable=False)  # e.g., "2025-B19" (biweekly period)
     completed_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     welcomer = db.relationship("User", backref="checkoffs")
     member = db.relationship("Member", backref="checkoffs")
-    __table_args__ = (db.UniqueConstraint("welcomer_id", "member_id", "week_key", name="uq_checkoff_week"),)
+    __table_args__ = (db.UniqueConstraint("welcomer_id", "member_id", "week_key", name="uq_checkoff_period"),)
 
-class WeeklyTopic(db.Model):
+class WeeklyTopic(db.Model):  # Note: Keeping class name for backward compatibility
     id = db.Column(db.Integer, primary_key=True)
-    week_key = db.Column(db.String(16), unique=True, nullable=False)  # e.g., "2025-W38"
+    week_key = db.Column(db.String(16), unique=True, nullable=False)  # e.g., "2025-B19" (biweekly period)
     topic = db.Column(db.String(200), nullable=False)
     bible_verse_ref = db.Column(db.String(200), nullable=True)  # e.g., "John 3:16"
     bible_verse_text = db.Column(db.Text, nullable=True)  # Full verse text

@@ -181,7 +181,7 @@ def delete_welcomer():
 
 @admin_bp.route("/set-weekly-topic", methods=["POST"])
 @role_required("admin")
-def set_weekly_topic():
+def set_biweekly_topic():
     week_key = current_week_key()
     topic = request.form["topic"].strip()
     bible_verse_ref = request.form.get("bible_verse_ref", "").strip()
@@ -193,7 +193,7 @@ def set_weekly_topic():
         flash("Both topic and question are required.", "error")
         return redirect(url_for("admin.dashboard"))
     
-    # Check if topic already exists for this week
+    # Check if topic already exists for this biweekly period
     existing_topic = WeeklyTopic.query.filter_by(week_key=week_key).first()
     
     if existing_topic:
@@ -203,7 +203,7 @@ def set_weekly_topic():
         existing_topic.bible_verse_text = bible_verse_text if bible_verse_text else None
         existing_topic.question = question
         existing_topic.activity = activity if activity else None
-        flash("Weekly topic updated.", "success")
+        flash("Biweekly topic updated.", "success")
     else:
         # Create new topic
         new_topic = WeeklyTopic(
@@ -215,7 +215,7 @@ def set_weekly_topic():
             activity=activity if activity else None
         )
         db.session.add(new_topic)
-        flash("Weekly topic set.", "success")
+        flash("Biweekly topic set.", "success")
     
     db.session.commit()
     return redirect(url_for("admin.dashboard"))
